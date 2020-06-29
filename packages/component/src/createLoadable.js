@@ -90,7 +90,11 @@ function createLoadable({ defaultResolveComponent = identity, render, onLoad }) 
           // So we can require now the module synchronously
           this.loadSync()
 
-          props.__chunkExtractor.addChunk(ctor.chunkName(props))
+          // This module has not been excluded for CSR
+          if (options.csr !== false) {
+            props.__chunkExtractor.addChunk(ctor.chunkName(props))
+          }
+
           return
         }
 
